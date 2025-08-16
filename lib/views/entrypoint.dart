@@ -48,8 +48,10 @@ class MainScreen extends StatelessWidget {
                           : Icon(AntDesign.appstore_o),
                       label: "Home",
                     ),
-                    const BottomNavigationBarItem(
-                      icon: Icon(Icons.search),
+                    BottomNavigationBarItem(
+                      icon: controller.getTabIndex() == 1
+                          ? Icon(Icons.search, color: kSecondary)
+                          : Icon(Icons.search, color: Colors.black38),
                       label: "Search",
                     ),
                     BottomNavigationBarItem(
