@@ -1,11 +1,22 @@
 import 'package:delivery/constants/constants.dart';
 import 'package:delivery/controllers/tab_index_controller.dart';
+import 'package:delivery/views/cart/cart_page.dart';
+import 'package:delivery/views/home/home_page.dart';
+import 'package:delivery/views/profile/profile_page.dart';
+import 'package:delivery/views/search/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
+
+  final List<Widget> pageList = const [
+    HomePage(),
+    SearchPage(),
+    CartPage(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +25,7 @@ class MainScreen extends StatelessWidget {
       () => Scaffold(
         body: Stack(
           children: [
-            Container(height: height, width: width, color: kOffWhite),
+            pageList[controller.getTabIndex()],
             Align(
               alignment: Alignment.bottomCenter,
               child: Theme(
@@ -26,7 +37,9 @@ class MainScreen extends StatelessWidget {
                     color: Colors.black38,
                   ),
                   selectedIconTheme: const IconThemeData(color: kSecondary),
-                  onTap: (value) => {controller.setTabIndex = value},
+                  onTap: (value) {
+                    controller.setTabIndex = value;
+                  },
                   currentIndex: controller.getTabIndex(),
                   items: [
                     BottomNavigationBarItem(
@@ -47,7 +60,7 @@ class MainScreen extends StatelessWidget {
                       label: "Cart",
                     ),
                     BottomNavigationBarItem(
-                      icon: controller.getTabIndex == 3
+                      icon: controller.getTabIndex() == 3
                           ? Icon(FontAwesome.user_circle)
                           : Icon(FontAwesome.user_circle_o),
                       label: "Profile",
